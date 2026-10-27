@@ -8,19 +8,17 @@ import { useIsRestoring } from "@tanstack/react-query";
 import produce from "immer";
 import AuthFallback from "@/popup/components/Fallback/Auth/AuthFallback";
 import isUnauthorizedError from "@/utils/isUnauthorizedError";
+import { useTranslation } from "@/i18n";
 import MainControl from "./MainControl/MainControl";
 
 const MemoizedAssignmentList = memo(AssignmentList);
-
-const COURSE_LIST_SUBHEADER = "강의";
-const HOMEWORK_LIST_SUBHEADER = "과제";
-const CUSTOM_LIST_SUBHEADER = "사용자 추가 과제";
 
 function Main() {
   // Atoms
   const selectedCourseIds = useAtomValue(selectedCourseIdsAtom);
   const settings = useAtomValue(settingsAtom);
   const setPlayList = useSetAtom(playListAtom);
+  const t = useTranslation();
 
   // Queries
   const isRestoring = useIsRestoring();
@@ -85,7 +83,7 @@ function Main() {
         onCancelSelect={handleCancelSelect}
       />
       <MemoizedAssignmentList
-        title={COURSE_LIST_SUBHEADER}
+        title={t.main.courses}
         isCheckable={isCheckable}
         isLoading={assignmentResults.some((result) => result.isLoading) || isRestoring}
         assignments={videoAssignments}
@@ -95,7 +93,7 @@ function Main() {
         timeAsLeft={!!settings.DDAY}
       />
       <MemoizedAssignmentList
-        title={HOMEWORK_LIST_SUBHEADER}
+        title={t.main.homework}
         isLoading={assignmentResults.some((result) => result.isLoading) || isRestoring}
         assignments={workAssignments}
         courses={courses ?? []}
@@ -103,7 +101,7 @@ function Main() {
       />
       {settings.CUSTOM_ASSIGNMENT && (
         <MemoizedAssignmentList
-          title={CUSTOM_LIST_SUBHEADER}
+          title={t.main.custom}
           isLoading={assessmentResults.some((result) => result.isLoading) || isRestoring}
           assignments={customAssignments}
           courses={courses ?? []}

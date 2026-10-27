@@ -8,13 +8,13 @@ interface Route {
   };
 }
 
-type SettingsKey = "DDAY" | "WINDOW" | "PLAYRATE" | "CUSTOM_ASSIGNMENT";
+type SettingsKey = "DDAY" | "WINDOW" | "PLAYRATE" | "CUSTOM_ASSIGNMENT" | "LANGUAGE";
+type Language = "ko" | "en";
 type SettingsType = "switch" | "number" | "select";
 type Settings = {
   [key in SettingsKey]: boolean | string;
 };
 interface SettingsItemInfo {
-  title: string;
   defaultValue: boolean | string;
   type: SettingsType;
   options?: { name: string; value: string }[];
@@ -27,13 +27,13 @@ type ErrorKey = "AUTH" | "UNEXPECTED";
 type ErrorInfo = {
   [key in ErrorKey]: {
     name: string;
-    message: string;
   };
 };
 
 export type {
   Route,
   SettingsKey,
+  Language,
   SettingsType,
   Settings,
   SettingsInfo,

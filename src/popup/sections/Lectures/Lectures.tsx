@@ -10,6 +10,7 @@ import { PLAYRATE } from "@/constants";
 import EstimatedDuration from "@/popup/components/EstimatedDuration/EstimatedDuration";
 import AuthFallback from "@/popup/components/Fallback/Auth/AuthFallback";
 import isUnauthorizedError from "@/utils/isUnauthorizedError";
+import { useTranslation } from "@/i18n";
 import * as S from "./Lectures.style";
 
 function Lectures() {
@@ -21,6 +22,7 @@ function Lectures() {
     userId: courses?.[0].enrollments[0].user_id,
   });
   useChromeMessageHandler();
+  const t = useTranslation();
 
   // 플레이리스트가 바뀌면 background worker가 사용할 src 목록 저장
   useEffect(() => {
@@ -42,7 +44,7 @@ function Lectures() {
         </>
       ) : (
         <S.BlankPlayList>
-          <Typography variant="h5">재생할 영상이 없어요..</Typography>
+          <Typography variant="h5">{t.lectures.blank}</Typography>
         </S.BlankPlayList>
       )}
 

@@ -63,6 +63,10 @@
     const $frontScreen = document.querySelector("#front-screen");
     if (!$frontScreen) return false;
     if ($frontScreen.style.display === "none") return true;
+    // Firefox는 소리가 있는 자동 재생을 차단하므로 재생 버튼을 누르기 전에 음소거
+    document.querySelectorAll("video").forEach(($video) => {
+      $video.muted = true;
+    });
     const $playBtn = $frontScreen.querySelector(".vc-front-screen-play-btn");
     if (!$playBtn) return false;
     $playBtn.click();

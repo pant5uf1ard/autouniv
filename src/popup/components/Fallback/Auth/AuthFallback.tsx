@@ -1,10 +1,11 @@
-import { ERRORS } from "@/constants";
+import { useTranslation } from "@/i18n";
 import { Button, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import * as S from "./AuthFallback.style";
 
 function AuthFallback() {
   const queryClient = useQueryClient();
+  const t = useTranslation();
 
   const clearAuthCache = () => {
     queryClient.clear();
@@ -24,13 +25,13 @@ function AuthFallback() {
   return (
     <S.AuthFallbackContainer>
       <Typography role="alert" variant="h5" sx={{ color: "#3c3c3ca0" }}>
-        {ERRORS.AUTH.message}
+        {t.errors.AUTH}
       </Typography>
       <Button onClick={handleClick} variant="outlined" size="large" color="secondary">
-        새 탭에서 로그인 하기
+        {t.auth.login}
       </Button>
       <Button onClick={handleRetry} variant="contained" size="large" color="secondary">
-        로그인 상태 다시 확인
+        {t.auth.retry}
       </Button>
     </S.AuthFallbackContainer>
   );

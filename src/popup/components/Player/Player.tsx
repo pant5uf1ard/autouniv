@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { AssignmentInfo } from "@/types";
+import { useTranslation } from "@/i18n";
 
 interface PlayerProps {
   assignment: AssignmentInfo;
@@ -21,6 +22,8 @@ export function buildPlayerSrc(assignment: AssignmentInfo, studentId: string): s
 }
 
 function Player({ assignment, studentId }: PlayerProps) {
+  const t = useTranslation();
+
   useEffect(() => {
     if (!studentId) return;
 
@@ -51,7 +54,7 @@ function Player({ assignment, studentId }: PlayerProps) {
         borderRadius: "4px",
       }}
     >
-      Canvas 탭에서 재생 중...
+      {t.lectures.playing}
     </div>
   );
 }

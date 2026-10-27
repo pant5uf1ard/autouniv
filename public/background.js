@@ -204,7 +204,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   // lcms 플레이어 → background 메시지
-  if (!sender.origin?.endsWith("lcms.skku.edu")) return;
+  // Firefox는 sender.origin을 제공하지 않을 수 있으므로 sender.url로 대체
+  let senderHost = "";
+  try {
+    senderHost = new URL(sender.origin || sender.url || "").hostname;
+  } catch {
+    return;
+  }
+  if (!senderHost.endsWith("lcms.skku.edu")) return;
 
   if (message.message === "playrate") {
     chrome.storage.local.get(["autouniv_settings"], (result) => {

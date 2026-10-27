@@ -2,6 +2,7 @@ import { Box, List, ListSubheader, Typography } from "@mui/material";
 import { memo, useCallback } from "react";
 import { AssignmentShortInfo, Course } from "@/types";
 import { LIST_SKELETON_COUNT } from "@/constants";
+import { useTranslation } from "@/i18n";
 import AssignmentListItem from "./ListItem/ListItem";
 import AssignmentSkeletonItem from "./SkeletonItem/SkeletonItem";
 import * as S from "./AssignmentList.style";
@@ -17,8 +18,6 @@ interface AssignmentListProps {
   timeAsLeft?: boolean;
 }
 
-const BLANK_MESSAGE = "야호! 다 끝냈어요!";
-
 const MemoizedAssignmentListItem = memo(AssignmentListItem);
 
 function AssignmentList({
@@ -31,6 +30,7 @@ function AssignmentList({
   onCheck,
   timeAsLeft,
 }: AssignmentListProps) {
+  const t = useTranslation();
   const handleCheck = useCallback(
     (id: number) => {
       if (onCheck) onCheck(id);
@@ -64,7 +64,7 @@ function AssignmentList({
               ))
             ) : (
               <S.BlankList>
-                <Typography variant="h5">{BLANK_MESSAGE}</Typography>
+                <Typography variant="h5">{t.main.blank}</Typography>
               </S.BlankList>
             )
           }

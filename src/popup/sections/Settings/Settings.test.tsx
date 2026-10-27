@@ -1,4 +1,4 @@
-import { SETTINGS } from "@/constants";
+import { MESSAGES } from "@/i18n";
 import { render } from "@/__test__/customRender";
 import mockStorage from "@/__test__/mock/storage";
 import "@testing-library/jest-dom";
@@ -9,9 +9,10 @@ describe("Settings section UI test", () => {
   beforeEach(() => mockStorage());
   afterEach(() => cleanup());
 
-  const getVersion = () => screen.getByText("버전");
-  const getGithub = () => screen.getByText("버그 제보 및 기능 제안");
-  const getSettings = () => Object.values(SETTINGS).map((val) => screen.getByText(val.title));
+  const getVersion = () => screen.getByText(MESSAGES.ko.settingsSection.version);
+  const getGithub = () => screen.getByText(MESSAGES.ko.settingsSection.report);
+  const getSettings = () =>
+    Object.values(MESSAGES.ko.settings).map((title) => screen.getByText(title));
 
   test("Version and developer infos should be displayed", async () => {
     await render(<Settings />);

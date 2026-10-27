@@ -2,6 +2,7 @@ import { Alert, AlertTitle } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { versionAtom } from "@/atoms";
+import { useTranslation } from "@/i18n";
 import * as S from "./UpdateAlert.style";
 
 const RELEASES_NOTE = "https://github.com/again7536/icampus-manager/releases";
@@ -9,6 +10,7 @@ const RELEASES_NOTE = "https://github.com/again7536/icampus-manager/releases";
 function UpdateAlert() {
   const [updated, setUpdated] = useState<boolean>(false);
   const [version, setVersion] = useAtom(versionAtom);
+  const t = useTranslation();
   const handleClick = () => {
     chrome.tabs.create({ url: RELEASES_NOTE });
   };
@@ -25,9 +27,9 @@ function UpdateAlert() {
   return updated ? (
     <Alert sx={{ marginBottom: "5px" }} severity="info">
       <AlertTitle>Info</AlertTitle>
-      새로운 버전으로 업데이트 되었습니다. —
+      {t.update.message}
       <S.ReleaseLink role="link" onClick={handleClick}>
-        변경 사항 보기
+        {t.update.changes}
       </S.ReleaseLink>
     </Alert>
   ) : null;

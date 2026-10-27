@@ -1,5 +1,6 @@
 import { SETTINGS_TYPE } from "@/constants";
 import { SettingsItemInfo, SettingsKey } from "@/types";
+import { useTranslation } from "@/i18n";
 import { ListItem, ListItemText, Switch, TextField, Select, MenuItem } from "@mui/material";
 import * as S from "./SettingsItem.style";
 
@@ -14,8 +15,10 @@ function SettingsItem({
   onChange,
   temporalSetting,
   listKey,
-  setting: { title, type, defaultValue, options },
+  setting: { type, defaultValue, options },
 }: SettingsItemProps) {
+  const title = useTranslation().settings[listKey];
+
   if (type === SETTINGS_TYPE.SWITCH)
     return (
       <ListItem>
@@ -51,7 +54,7 @@ function SettingsItem({
       <ListItemText id={`switch-list-${listKey}`} primary={title} />
       <S.LinkerLine />
       <Select
-        sx={{ width: "80px" }}
+        sx={{ minWidth: "80px" }}
         size="small"
         value={temporalSetting ?? defaultValue}
         onChange={(e) => onChange(listKey, e.target.value.toString())}

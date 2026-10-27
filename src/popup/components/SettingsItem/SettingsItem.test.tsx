@@ -31,7 +31,7 @@ describe("Settings section UI test", () => {
     const $hiddenCheckbox = $container.querySelector<HTMLInputElement>("input[type='checkbox']");
     expect($hiddenCheckbox?.checked);
   };
-  const getSelect = () => screen.getByRole("button");
+  const getSelect = () => screen.getByRole("combobox");
   const getSelectList = () => screen.getByRole("listbox");
 
   beforeEach(() => mockStorage());

@@ -2,6 +2,7 @@ import { LECTURE_TYPE } from "@/constants";
 import { AssignmentShortInfo } from "@/types";
 import { Checkbox, css, ListItem, ListItemButton, ListItemIcon, Typography } from "@mui/material";
 import moment from "@/utils/momentKo";
+import { useLanguage } from "@/i18n";
 import * as S from "./ListItem.style";
 
 interface AssignmentListItemProps {
@@ -21,6 +22,8 @@ function AssignmentListItem({
   onCheck,
   timeAsLeft,
 }: AssignmentListItemProps) {
+  const language = useLanguage();
+  const dueAt = moment(assignment.due_at).locale(language);
   const handleClickItem = (url: string) => {
     chrome.tabs.create({ url, active: false });
   };
@@ -52,13 +55,11 @@ function AssignmentListItem({
         `}
       >
         {timeAsLeft ? (
-          <Typography variant="body2">{moment(assignment.due_at).fromNow()}</Typography>
+          <Typography variant="body2">{dueAt.fromNow()}</Typography>
         ) : (
           <>
-            <Typography variant="body2">
-              {moment(assignment.due_at).format("YYYY-MM-DD")}
-            </Typography>
-            <Typography variant="body2">{moment(assignment.due_at).format("a hh:mm")}</Typography>
+            <Typography variant="body2">{dueAt.format("YYYY-MM-DD")}</Typography>
+            <Typography variant="body2">{dueAt.format("a hh:mm")}</Typography>
           </>
         )}
       </div>

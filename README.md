@@ -35,3 +35,22 @@ icampus-manager는 아이캠퍼스의 기능을 확장해주는 크롬 익스텐
 
 ## Prerequisites
 최신 버전의 Chrome 브라우저가 설치되어 있어야 합니다.
+Firefox 121 이상에서도 사용할 수 있습니다.
+
+## Build
+```sh
+yarn install
+yarn build   # dist/ 폴더에 Chrome·Firefox 공용 확장 프로그램 생성
+```
+
+- **Chrome**: `chrome://extensions` → 개발자 모드 → "압축해제된 확장 프로그램을 로드합니다" → `dist` 폴더 선택
+- **Firefox**: `about:debugging#/runtime/this-firefox` → "임시 부가 기능 로드" → `dist/manifest.json` 선택
+
+## Language / 언어
+설정 탭의 "언어 (Language)" 항목에서 한국어와 English 중 선택할 수 있습니다. 기본값은 브라우저 언어를 따릅니다.
+
+You can switch the UI between Korean and English under Settings → "Language (언어)". It defaults to your browser's language.
+
+## Firefox
+The same `dist/` build works in Firefox 121+. Load it via `about:debugging#/runtime/this-firefox` → "Load Temporary Add-on…" → pick `dist/manifest.json`.
+If the extension can't reach iCampus, open `about:addons` → Icampus Manager → Permissions and make sure access to `canvas.skku.edu` and `lcms.skku.edu` is allowed.

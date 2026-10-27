@@ -22,19 +22,12 @@ import EstimatedDuration from "@/popup/components/EstimatedDuration/EstimatedDur
 import CustomAssignmentModal from "@/popup/components/Modal/CustomAssignmentModal/CustomAssignmentModal";
 import { PLAYRATE } from "@/constants";
 import { AssignmentInfo, AssignmentShortInfo } from "@/types";
+import { useTranslation } from "@/i18n";
 import * as S from "./MainControl.style";
 
 const POPUP_URL = "popup.html";
 const WINDOW_HEIGHT = 600;
 const WINDOW_WIDTH = 510;
-const DROPDOWN_LABEL = "표시할 과목";
-const CUSTOM_ASSIGNMENT_TEXT = "사용자 추가 과제 선택";
-const OPEN_TAB_BUTTON_TEXT = "새 탭에서 열기";
-const OPEN_WINDOW_BUTTON_TEXT = "새 창에서 열기";
-const CANCEL_BUTTON_TEXT = "선택 취소";
-const CONFIRM_BUTTON_TEXT = "재생목록에 추가";
-const ADD_PLAYLIST_BUTTON_TEXT = "재생목록 선택";
-const UPDATE_BUTTON_TEXT = "강의 데이터 업데이트";
 
 interface MainControlProps {
   isCheckable: boolean;
@@ -61,6 +54,7 @@ function MainControl({
   const openModal = useSetAtom(modalOpenAtom);
   const closeModal = useSetAtom(modalCloseAtom);
   const [customAssignments, setCustomAssignments] = useAtom(customAssignmentIdsAtom);
+  const t = useTranslation();
 
   // queries
   const isRestoring = useIsRestoring();
@@ -108,13 +102,13 @@ function MainControl({
   return (
     <S.ControlWrapper>
       <SelectCheck
-        label={DROPDOWN_LABEL}
+        label={t.control.dropdownLabel}
         courses={courses ?? []}
         onChange={handleChange}
         selected={selectedCourseIds}
         isLoading={isRestoring}
       />
-      <Tooltip title={CUSTOM_ASSIGNMENT_TEXT}>
+      <Tooltip title={t.control.customAssignment}>
         <IconButton onClick={handleModalOpen}>
           <MoreVertIcon />
         </IconButton>
@@ -131,19 +125,19 @@ function MainControl({
           playrate={PLAYRATE[+settings.PLAYRATE]}
         />
       )}
-      <Tooltip title={settings.WINDOW ? OPEN_WINDOW_BUTTON_TEXT : OPEN_TAB_BUTTON_TEXT}>
+      <Tooltip title={settings.WINDOW ? t.control.openWindow : t.control.openTab}>
         <IconButton onClick={handleOpenTab}>
           <TabIcon />
         </IconButton>
       </Tooltip>
       {isCheckable ? (
         <>
-          <Tooltip title={CANCEL_BUTTON_TEXT}>
+          <Tooltip title={t.control.cancel}>
             <IconButton onClick={onCancelSelect}>
               <ClearIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title={CONFIRM_BUTTON_TEXT}>
+          <Tooltip title={t.control.confirm}>
             <IconButton onClick={onConfirmSelect}>
               <CheckIcon />
             </IconButton>
@@ -151,7 +145,7 @@ function MainControl({
         </>
       ) : (
         <>
-          <Tooltip title={UPDATE_BUTTON_TEXT}>
+          <Tooltip title={t.control.update}>
             <IconButton onClick={() => queryClient.invalidateQueries()}>
               <CachedIcon
                 css={css`
@@ -160,7 +154,7 @@ function MainControl({
               />
             </IconButton>
           </Tooltip>
-          <Tooltip title={ADD_PLAYLIST_BUTTON_TEXT}>
+          <Tooltip title={t.control.addPlaylist}>
             <IconButton onClick={handleClickAddPlaylist}>
               <PlaylistAddIcon />
             </IconButton>

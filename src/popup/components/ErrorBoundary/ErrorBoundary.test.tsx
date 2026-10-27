@@ -4,6 +4,7 @@ import { render } from "@/__test__/customRender";
 import mockStorage from "@/__test__/mock/storage";
 import { cleanup, screen, waitFor } from "@testing-library/react";
 import { ERRORS } from "@/constants";
+import { MESSAGES } from "@/i18n";
 import ErrorBoundary from "./ErrorBoundary";
 
 interface ErrorComponentProps {
@@ -20,16 +21,17 @@ describe("ErrorBoundary UI Test ", () => {
       if (errorType === ERRORS.AUTH.name)
         throw {
           ...ERRORS.AUTH,
+          message: MESSAGES.ko.errors.AUTH,
           response: { status: 401 },
         };
-      throw { ...ERRORS.UNEXPECTED };
+      throw { ...ERRORS.UNEXPECTED, message: MESSAGES.ko.errors.UNEXPECTED };
     }
     return <p>{NORMAL_TEXT}</p>;
   }
 
   const originalError = console.error.bind(console.error);
-  const getUnexpectedFallbackUI = () => screen.getByText(ERRORS.UNEXPECTED.message);
-  const getAuthFallbackUI = () => screen.getByText(ERRORS.AUTH.message);
+  const getUnexpectedFallbackUI = () => screen.getByText(MESSAGES.ko.errors.UNEXPECTED);
+  const getAuthFallbackUI = () => screen.getByText(MESSAGES.ko.errors.AUTH);
   const getNormalUI = () => screen.getByText(NORMAL_TEXT);
 
   beforeEach(() => {
@@ -37,7 +39,7 @@ describe("ErrorBoundary UI Test ", () => {
       .spyOn(console, "error")
       .mockImplementation(
         (msg) =>
-          !Object.values(ERRORS).some((val) => msg?.message?.includes(val.message)) &&
+          !Object.values(MESSAGES.ko.errors).some((message) => msg?.message?.includes(message)) &&
           !msg.toString().includes(REACT_ERROR_MESSAGE) &&
           originalError(msg)
       );

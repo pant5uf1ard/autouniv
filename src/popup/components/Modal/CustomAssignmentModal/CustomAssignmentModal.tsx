@@ -3,6 +3,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import CheckableSublist from "@/popup/components/List/CheckableSublist/CheckableSublist";
 import { AssignmentShortInfo, Course } from "@/types";
 import { useState } from "react";
+import { useTranslation } from "@/i18n";
 
 import * as S from "./CustomAssignmentModal.style";
 
@@ -14,15 +15,6 @@ interface CustomAssignmentModalProps {
   onClose: () => void;
 }
 
-const HELP_TEXT = `상단에는 '과제 및 평가' 탭에서 제공하는 과제 리스트를 표시합니다. 
-과제 리스트에서 과제를 선택하여 추가하면 하단에 옮겨집니다.`;
-
-const MODAL_TITLE = "사용자 추가 과제 선택";
-const CANCEL_BUTTON_TEXT = "취소";
-const CONFIRM_BUTTON_TEXT = "선택 완료";
-const UP_BUTTON_TEXT = "삭제 ⮝";
-const DOWN_BUTTON_TEXT = "⮟ 추가";
-
 function CustomAssignmentModal({
   assignments,
   courses,
@@ -30,6 +22,7 @@ function CustomAssignmentModal({
   onClose,
   addedAssignmentIds,
 }: CustomAssignmentModalProps) {
+  const t = useTranslation();
   const [checkedUnlisted, setCheckedUnlisted] = useState<Set<number>>(new Set());
   const [checkedListed, setCheckedListed] = useState<Set<number>>(new Set());
   const [listedAssignmentIds, setListedAssignmentIds] = useState<number[]>(addedAssignmentIds);
@@ -47,8 +40,8 @@ function CustomAssignmentModal({
   return (
     <>
       <DialogTitle>
-        {MODAL_TITLE}
-        <Tooltip sx={{ fontSize: "12pt", marginLeft: "10px" }} title={HELP_TEXT}>
+        {t.modal.title}
+        <Tooltip sx={{ fontSize: "12pt", marginLeft: "10px" }} title={t.modal.help}>
           <HelpIcon />
         </Tooltip>
       </DialogTitle>
@@ -73,10 +66,10 @@ function CustomAssignmentModal({
         </S.SublistContainer>
         <S.ButtonGroup>
           <Button onClick={handleRemoveFromListed} variant="outlined">
-            {UP_BUTTON_TEXT}
+            {t.modal.up}
           </Button>
           <Button onClick={handleAddToListed} variant="outlined">
-            {DOWN_BUTTON_TEXT}
+            {t.modal.down}
           </Button>
         </S.ButtonGroup>
         <S.SublistContainer variant="outlined">
@@ -100,10 +93,10 @@ function CustomAssignmentModal({
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="info">
-          {CANCEL_BUTTON_TEXT}
+          {t.modal.cancel}
         </Button>
         <Button onClick={handleConfirm} color="primary">
-          {CONFIRM_BUTTON_TEXT}
+          {t.modal.confirm}
         </Button>
       </DialogActions>
     </>
